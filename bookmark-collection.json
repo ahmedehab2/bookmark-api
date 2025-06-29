@@ -1,0 +1,163 @@
+{
+  "info": {
+    "_postman_id": "YOUR_POSTMAN_COLLECTION_ID",
+    "name": "Bookmark API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Bookmark",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"My Awesome Bookmark\",\n    \"url\": \"https://example.com\",\n    \"description\": \"A great example website\",\n    \"tags\": [\"web\", \"example\"]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/bookmark",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "bookmark"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Bookmarks",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/bookmark?filterQuery.title=test&options.page=1&options.limit=10",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "bookmark"
+          ],
+          "query": [
+            {
+              "key": "filterQuery.title",
+              "value": "test",
+              "description": "Example filter for title"
+            },
+            {
+              "key": "options.page",
+              "value": "1",
+              "description": "Page number for pagination"
+            },
+            {
+              "key": "options.limit",
+              "value": "10",
+              "description": "Number of items per page"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Bookmark by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/bookmark/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "bookmark",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "60f1b0b3e6b3c3001c8c8c8c",
+              "description": "Replace with an actual bookmark ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Bookmark by ID",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Updated Bookmark Title\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/bookmark/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "bookmark",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "60f1b0b3e6b3c3001c8c8c8c",
+              "description": "Replace with an actual bookmark ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Bookmark by ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/bookmark/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "bookmark",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "60f1b0b3e6b3c3001c8c8c8c",
+              "description": "Replace with an actual bookmark ID"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
