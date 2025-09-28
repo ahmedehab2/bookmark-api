@@ -31,7 +31,7 @@ jobs:
           key: ${{ secrets.DEVBOX_SSH_KEY }}
           port: ${{ secrets.DEVBOX_SSH_PORT }}
           script: |
-            APP_PATH="${{ secrets.APP_DIR }}/${{ github.event.repository.name }}"
+            APP_PATH="projects/${{ github.event.repository.name }}"
             mkdir -p $APP_PATH
             cd $APP_PATH
             if [ ! -d ".git" ]; then
