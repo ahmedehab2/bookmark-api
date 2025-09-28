@@ -1,0 +1,22 @@
+name: CI/CD Pipeline
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploغ
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEVBOX_HOST }}
+          username: ${{ secrets.DEVBOX_USER }}
+          key: ${{ secrets.DEVBOX_SSH_KEY }}
+          script: |
+            cd /var/www/myapp
+            git pull origin main
+            docker build -t myapp .
+            docker-compose up -d myapp
