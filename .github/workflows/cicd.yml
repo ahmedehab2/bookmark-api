@@ -35,8 +35,8 @@ jobs:
             mkdir -p $APP_PATH
             cd $APP_PATH
             if [ ! -d ".git" ]; then
-              git clone https://github.com/${{ github.repository }}.git .
+              git clone https://github.com/${{ github.repository }}.git ${{ github.event.repository.name }}
             else
               git pull origin main
             fi
-            docker-compose up -d --build ${{ github.event.repository.name }}
+            docker compose up -d --build ${{ github.event.repository.name }}
