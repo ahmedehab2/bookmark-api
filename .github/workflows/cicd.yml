@@ -4,7 +4,21 @@ on:
     branches: [main]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,7 +31,12 @@ jobs:
           key: ${{ secrets.DEVBOX_SSH_KEY }}
           port: ${{ secrets.DEVBOX_SSH_PORT }}
           script: |
-            cd /var/www/myapp
-            git pull origin main
-            docker build -t myapp .
-            docker-compose up -d myapp
+            APP_PATH="${{ secrets.APP_DIR }}/${{ github.event.repository.name }}"
+            mkdir -p $APP_PATH
+            cd $APP_PATH
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/${{ github.repository }}.git .
+            else
+              git pull origin main
+            fi
+            docker-compose up -d --build ${{ github.event.repository.name }}
