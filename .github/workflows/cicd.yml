@@ -1,4 +1,5 @@
 name: CI/CD Pipeline
+
 on:
   push:
     branches: [main]
@@ -8,12 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
       - name: Install dependencies
         run: npm ci
+
       - name: Run tests
         run: npm test
 
@@ -31,12 +35,16 @@ jobs:
           key: ${{ secrets.DEVBOX_SSH_KEY }}
           port: ${{ secrets.DEVBOX_SSH_PORT }}
           script: |
-            APP_PATH="projects/${{ github.event.repository.name }}"
-            mkdir -p $APP_PATH
-            cd $APP_PATH
-            if [ ! -d ".git" ]; then
-              git clone https://github.com/${{ github.repository }}.git ${{ github.event.repository.name }}
-            else
-              git pull origin main
+            APP_PATH="$HOME/projects/${{ github.event.repository.name }}"
+            if [ ! -d "$APP_PATH" ]; then
+              mkdir -p $APP_PATH
+              git clone https://github.com/${{ github.repository }}.git $APP_PATH
             fi
-            docker run -d --name ${{ github.event.repository.name }} -p 3000:3000 ${{ github.event.repository.name }}
+
+            cd $APP_PATH
+            git pull origin main
+            npm install --production
+            npm run build
+            pm2 restart ${{ github.event.repository.name }} || \
+            pm2 start dist/main.js --name ${{ github.event.repository.name }}
+            pm2 save
