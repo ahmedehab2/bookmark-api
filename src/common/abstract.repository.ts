@@ -18,6 +18,11 @@ export interface FindAndPaginateOptions<T> {
   queryOptions?: QueryOptions<T>;
 }
 
+
+//limits off sql
+//ADD INTERFACE TO USE ALL 
+
+
 export abstract class AbstractRepository<T extends Document> {
   constructor(protected readonly model: Model<T>) { }
 
@@ -120,6 +125,8 @@ export abstract class AbstractRepository<T extends Document> {
       query.lean<T[]>().exec(),
       this.model.countDocuments(filterQuery).exec(),
     ]);
+
+
 
     return { data, total, page, limit };
   }

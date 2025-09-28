@@ -18,4 +18,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     BookmarkModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

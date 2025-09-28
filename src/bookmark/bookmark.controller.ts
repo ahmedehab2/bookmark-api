@@ -13,10 +13,9 @@ import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { QueryDto } from './dto/query.dto';
 
-
 @Controller('bookmark')
 export class BookmarkController {
-  constructor(private readonly bookmarkService: BookmarkService) { }
+  constructor(private readonly bookmarkService: BookmarkService) {}
 
   @Post()
   async create(@Body() createBookmarkDto: CreateBookmarkDto) {
@@ -24,16 +23,13 @@ export class BookmarkController {
   }
 
   @Get()
-  async findAll(
-    @Query() queryDto: QueryDto,
-
-  ) {
-    console.log(queryDto,
+  async findAll(@Query() queryDto: QueryDto) {
+    console.log(
+      queryDto,
       typeof queryDto.limit,
       typeof queryDto.page,
       typeof queryDto.search,
-
-    )
+    );
     return await this.bookmarkService.findAll(queryDto);
   }
 
@@ -52,9 +48,9 @@ export class BookmarkController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    const RES = await this.bookmarkService.remove(id);
+    await this.bookmarkService.remove(id);
     return {
-      message: `Bookmark with id ${id} has been removed`,
+      message: 'Bookmark deleted successfully',
     };
   }
 }

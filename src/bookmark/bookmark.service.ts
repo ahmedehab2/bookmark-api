@@ -8,20 +8,14 @@ import { QueryDto } from './dto/query.dto';
 
 @Injectable()
 export class BookmarkService {
-  constructor(private bookmarkRepository: BookmarkRepository) { }
+  constructor(private bookmarkRepository: BookmarkRepository) {}
 
   async create(createBookmarkDto: CreateBookmarkDto) {
     return this.bookmarkRepository.create(createBookmarkDto);
   }
 
-  async findAll(
-    queryDto: QueryDto,
-  ) {
-    const {
-      limit,
-      page,
-      search,
-    } = queryDto;
+  async findAll(queryDto: QueryDto) {
+    const { limit, page, search } = queryDto;
     const filter: FilterQuery<Bookmark> = {};
     if (search) {
       filter.$or = [
@@ -44,10 +38,17 @@ export class BookmarkService {
     return Bookmark;
   }
 
-  async update(id: string, updateBookmarkDto: UpdateBookmarkDto): Promise<Bookmark | null> {
-    const Bookmark = await this.bookmarkRepository.findByIdAndUpdate(id, updateBookmarkDto, {
-      new: true,
-    });
+  async update(
+    id: string,
+    updateBookmarkDto: UpdateBookmarkDto,
+  ): Promise<Bookmark | null> {
+    const Bookmark = await this.bookmarkRepository.findByIdAndUpdate(
+      id,
+      updateBookmarkDto,
+      {
+        new: true,
+      },
+    );
     if (!Bookmark) {
       throw new NotFoundException(`Bookmark with id ${id} not found`);
     }
@@ -61,6 +62,4 @@ export class BookmarkService {
     }
     return Bookmark;
   }
-
-
 }
