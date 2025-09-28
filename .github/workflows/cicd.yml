@@ -39,4 +39,4 @@ jobs:
             else
               git pull origin main
             fi
-            docker compose up -d --build ${{ github.event.repository.name }}
+            docker run -d --name ${{ github.event.repository.name }} -p 3000:3000 ${{ github.event.repository.name }}
