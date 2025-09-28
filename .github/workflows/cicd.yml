@@ -45,7 +45,8 @@ jobs:
             cd $APP_PATH
             git pull origin main
             npm install --production
-            npm run build
-            pm2 restart ${{ github.event.repository.name }} || \
-            pm2 start dist/main.js --name ${{ github.event.repository.name }}
-            pm2 save
+
+            npx -p @nestjs/cli nest build
+            npx -p pm2 pm2 restart ${{ github.event.repository.name }} || \
+            npx -p pm2 pm2 start dist/main.js --name ${{ github.event.repository.name }}
+            npx -p pm2 pm2 save
