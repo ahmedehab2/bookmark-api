@@ -15,6 +15,7 @@ jobs:
           host: ${{ secrets.DEVBOX_HOST }}
           username: ${{ secrets.DEVBOX_USER }}
           key: ${{ secrets.DEVBOX_SSH_KEY }}
+          port: ${{ secrets.DEVBOX_SSH_PORT }}
           script: |
             cd /var/www/myapp
             git pull origin main
