@@ -35,6 +35,7 @@ jobs:
           key: ${{ secrets.DEVBOX_SSH_KEY }}
           port: ${{ secrets.DEVBOX_SSH_PORT }}
           script: |
+            export PATH=$PATH:$(npm bin -g)
             APP_PATH="$HOME/projects/${{ github.event.repository.name }}"
             if [ ! -d "$APP_PATH" ]; then
               mkdir -p $APP_PATH
